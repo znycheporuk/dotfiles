@@ -8,6 +8,8 @@ mkdir -p "$HOME/.config/starship"
 mkdir -p "$HOME/.config/tmux"
 mkdir -p "$HOME/.config/wezterm"
 mkdir -p "$HOME/.config/zed"
+mkdir -p "$HOME/.config/karabiner"
+rm "$HOME/.config/karabiner/karabiner.json"
 
 stow -d "$HOME/dotfiles" -t "$HOME/Library/Application Support/nushell" nushell
 stow -d "$HOME/dotfiles" -t "$HOME/.config/aerospace" aerospace
@@ -17,3 +19,4 @@ stow -d "$HOME/dotfiles" -t "$HOME/.config/starship" starship
 stow -d "$HOME/dotfiles" -t "$HOME/.config/tmux" tmux
 stow -d "$HOME/dotfiles" -t "$HOME/.config/wezterm" wezterm
 stow -d "$HOME/dotfiles" -t "$HOME/.config/zed" zed
+stow -d "$HOME/dotfiles" -t "$HOME/.config/karabiner" karabiner

@@ -18,7 +18,6 @@ local function scheme_for_appearance(appearance)
 end
 
 return {
-    -- Set the color scheme to Catppuccin Mocha
     color_scheme = scheme_for_appearance(get_appearance()),
 
     -- Other configurations
@@ -26,8 +25,6 @@ return {
     font_size = 16.0,
     enable_tab_bar = true,
     hide_tab_bar_if_only_one_tab = true,
-    -- use_fancy_tab_bar = true, 50 min
-    -- window_decorations = "RESIZE",
     window_background_opacity = 0.8,
     macos_window_background_blur = 20,
     text_background_opacity = 1,

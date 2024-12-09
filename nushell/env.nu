@@ -1,5 +1,7 @@
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/opt/homebrew/bin')
-$env.PATH = ($env.PATH | prepend "/home/vaibhavdn/.fnm")
+use std "path add"
+
+path add /opt/homebrew/bin
+path add /home/vaibhavdn/.fnm
 
 # Starship
 def is_dark_mode [] {
@@ -21,3 +23,14 @@ starship init nu | save -f ~/.cache/starship/init.nu
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
 mkdir ~/.cache/carapace
 carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
+
+fnm env --json | from json | load-env
+
+$env.FNM_BIN = $"($env.FNM_DIR)/bin"
+$env.FNM_MULTISHELL_PATH = $"($env.FNM_DIR)/nodejs"
+
+path add $env.FNM_BIN
+path add $env.FNM_MULTISHELL_PATH
+path add $"($env.FNM_MULTISHELL_PATH)/bin"
+path add ~/.orbstack/bin
+path add /usr/local/bin

@@ -74,4 +74,7 @@ $env.config = {
 
 }
 
+alias dcu = docker compose up
+alias dcd = docker compose down
+
 source ~/.cache/carapace/init.nu
