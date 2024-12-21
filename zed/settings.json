@@ -1,5 +1,4 @@
 {
-  "languages": {},
   "inline_completions": {
     "disabled_globs": [".env"]
   },
@@ -25,7 +24,7 @@
   "buffer_font_size": 18,
   "buffer_font_weight": 400,
   "soft_wrap": "editor_width",
-  "file_scan_exclusions": ["**/.DS_Store", "**/.git", ".idea", ".data"],
+  "file_scan_exclusions": ["**/.DS_Store", "**/.git", ".idea"],
   "copilot": {
     "disabled_globs": [".env"],
     "button": false
@@ -47,7 +46,7 @@
       "model": "gpt-4o"
     },
     "version": "2",
-    "button": true,
+    "button": false,
     "enabled": true
   },
   "chat_panel": {

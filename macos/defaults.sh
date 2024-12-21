@@ -61,11 +61,19 @@ defaults write com.apple.finder NewWindowTarget PfHm
 killall Finder
 
 # Dock
+defaults write com.apple.dock expose-group-apps -bool true # Group windows by application, so aerospace workspaces are properly shown.
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock persistent-apps -array
 defaults write com.apple.dock persistent-others -array
 defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mru-spaces -bool false
+# Disable hot corners
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tl-corner -int 0
+defaults write com.apple.dock wvous-br-corner -int 0
+defaults write com.apple.dock wvous-bl-corner -int 0
+
+
 
 apps=(
   "/Applications/Telegram Desktop.app"
