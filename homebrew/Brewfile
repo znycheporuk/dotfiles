@@ -17,6 +17,8 @@ brew "go"
 brew "gopls"
 tap "oven-sh/bun"
 brew "bun"
+tap "FelixKratz/formulae"
+brew "borders"
 
 cask "orbstack"
 cask "logi-options+"

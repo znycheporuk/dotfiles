@@ -73,8 +73,6 @@ defaults write com.apple.dock wvous-tl-corner -int 0
 defaults write com.apple.dock wvous-br-corner -int 0
 defaults write com.apple.dock wvous-bl-corner -int 0
 
-
-
 apps=(
   "/Applications/Telegram Desktop.app"
   "/Applications/Zen Browser.app"
