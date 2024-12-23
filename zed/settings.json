@@ -37,7 +37,7 @@
   },
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "Shell Script": ["*.conf"]
+    "Shell Script": ["*.conf", "*rc"]
   },
   "assistant": {
     "dock": "right",

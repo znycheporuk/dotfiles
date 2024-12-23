@@ -60,6 +60,10 @@ rm -rf ~/.DS_Store
 defaults write com.apple.finder NewWindowTarget PfHm
 killall Finder
 
+# Hide menu bar, so there is space for the status bar. Have to restart to take effect.
+defaults write 'Apple Global Domain' AppleMenuBarVisibleInFullscreen -bool false
+defaults write 'Apple Global Domain' _HIHideMenuBar -bool true
+
 # Dock
 defaults write com.apple.dock expose-group-apps -bool true # Group windows by application, so aerospace workspaces are properly shown.
 defaults write com.apple.dock autohide -bool true

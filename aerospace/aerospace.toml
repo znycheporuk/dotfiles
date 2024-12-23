@@ -1,22 +1,35 @@
 start-at-login = true
-after-login-command = ['workspace M']
+after-login-command = []
 
 after-startup-command = [
+    'exec-and-forget sketchybar',
+    'workspace M',
     'exec-and-forget borders active_color=0xffcba6f7 width=5.0 hidpi=on',
 ]
-exec-on-workspace-change = []
 
+# Notify Sketchybar about workspace change
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+]
+on-focus-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 accordion-padding = 30
 
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 automatically-unhide-macos-hidden-apps = false
 
 [workspace-to-monitor-force-assignment]
-S = 'secondary'
+S = 'main'
+M = 'secondary'
+B = 'secondary'
+G = 'secondary'
+T = 'secondary'
+Z = 'secondary'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'zen browser'
@@ -42,31 +55,39 @@ run = 'move-node-to-workspace Z'
 if.app-name-regex-substring = 'finder'
 run = 'layout floating'
 
+[[on-window-detected]]
+if.app-name-regex-substring = 'openvpn'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'zoom'
+run = 'move-node-to-workspace M'
+
 [gaps]
-inner.horizontal = 6
-inner.vertical = 6
-outer.left = 3
-outer.bottom = 3
-outer.top = 3
-outer.right = 3
+inner.horizontal = [{ monitor."built-in" = 6 }, 8]
+inner.vertical = [{ monitor."built-in" = 6 }, 8]
+outer.left = [{ monitor."built-in" = 3 }, 8]
+outer.bottom = [{ monitor."built-in" = 3 }, 8]
+outer.top = [{ monitor."built-in" = 3 }, 36]
+outer.right = [{ monitor."built-in" = 3 }, 8]
 
 [mode.main.binding]
 
 alt-ctrl-shift-f = 'fullscreen'
-alt-ctrl-f = 'layout floating'
+alt-ctrl-f = 'layout floating tiling'
 
 alt-slash = 'layout tiles horizontal vertical'
 alt-period = 'layout accordion horizontal vertical'
 
-alt-left = 'focus left'
-alt-down = 'focus down'
-alt-up = 'focus up'
-alt-right = 'focus right'
+alt-h = 'focus left'
+alt-e = 'focus down'
+alt-a = 'focus up'
+alt-i = 'focus right'
 
-alt-ctrl-left = 'move left'
-alt-ctrl-down = 'move down'
-alt-ctrl-up = 'move up'
-alt-ctrl-right = 'move right'
+alt-ctrl-h = 'move left'
+alt-ctrl-a = 'move down'
+alt-ctrl-e = 'move up'
+alt-ctrl-i = 'move right'
 
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
@@ -78,12 +99,12 @@ alt-s = 'workspace S'
 alt-t = 'workspace T'
 alt-z = 'workspace Z'
 
-alt-shift-m = 'move-node-to-workspace M' # main workspace
-alt-shift-g = 'move-node-to-workspace G'
-alt-shift-b = 'move-node-to-workspace B'
-alt-shift-s = 'move-node-to-workspace S'
-alt-shift-t = 'move-node-to-workspace T'
-alt-shift-z = 'move-node-to-workspace Z'
+alt-ctrl-m = 'move-node-to-workspace M' # main workspace
+alt-ctrl-g = 'move-node-to-workspace G'
+alt-ctrl-b = 'move-node-to-workspace B'
+alt-ctrl-s = 'move-node-to-workspace S'
+alt-ctrl-t = 'move-node-to-workspace T'
+alt-ctrl-z = 'move-node-to-workspace Z'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -91,13 +112,17 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode app'
 
+alt-shift-b = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
+alt-shift-g = 'exec-and-forget open -a /Applications/Wezterm.app'
+alt-shift-s = 'exec-and-forget open -a /Applications/Slack.app'
+alt-shift-t = 'exec-and-forget open -a /Applications/Telegram\ Desktop.app'
+alt-shift-v = 'exec-and-forget open -a /Applications/OpenVPN\ Connect.app'
+alt-shift-z = 'exec-and-forget open -a /Applications/Zed.app'
+alt-shift-comma = 'exec-and-forget open -a /System/Applications/System\ Settings.app'
+
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = [
-    'layout floating tiling',
-    'mode main',
-] # Toggle between floating and tiling layout
+r = ['flatten-workspace-tree', 'mode main']                # reset layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
@@ -107,16 +132,3 @@ alt-shift-left = ['join-with left', 'mode main']
 alt-shift-down = ['join-with down', 'mode main']
 alt-shift-up = ['join-with up', 'mode main']
 alt-shift-right = ['join-with right', 'mode main']
-
-[mode.app.binding]
-b = ['exec-and-forget open -a /Applications/Zen\ Browser.app', 'mode main']
-g = ['exec-and-forget open -a /Applications/Wezterm.app', 'mode main']
-s = ['exec-and-forget open -a /Applications/Slack.app', 'mode main']
-t = ['exec-and-forget open -a /Applications/Telegram.app', 'mode main']
-v = ['exec-and-forget open -a /Applications/OpenVPN\ Connect.app', 'mode main']
-z = ['exec-and-forget open -a /Applications/Zed.app', 'mode main']
-comma = [
-    'exec-and-forget open -a /System/Applications/System\ Settings.app',
-    'mode main',
-]
-esc = ['mode main']

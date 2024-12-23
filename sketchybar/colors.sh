@@ -1,0 +1,8 @@
+export TEXT_COLOR="0xffcdd6f4"
+export GREEN="0xffa6e3a1"
+export YELLOW="0xfff9e2af"
+export RED="0xfff38ba8"
+export BLUE="0xff89b4fa"
+export MAUVE="0xffcba6f7"
+export PEACH="0xfffab387"
+export OVERLAY_COLOR="0x807c7f93"
