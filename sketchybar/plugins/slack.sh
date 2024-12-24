@@ -11,7 +11,7 @@ if [[ $STATUS_LABEL =~ \"label\"=\"([^\"]*)\" ]]; then
             ;;
         "•")
             LABEL=""
-            ICON_COLOR="$YELLOW"
+            ICON_COLOR="$MAUVE"
             ;;
         [0-9]*)
             ICON_COLOR="$MAUVE"

@@ -56,6 +56,10 @@ if.app-name-regex-substring = 'finder'
 run = 'layout floating'
 
 [[on-window-detected]]
+if.window-title-regex-substring = 'picture-in-picture'
+run = 'layout floating'
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'openvpn'
 run = 'move-node-to-workspace M'
 
@@ -120,9 +124,13 @@ alt-shift-v = 'exec-and-forget open -a /Applications/OpenVPN\ Connect.app'
 alt-shift-z = 'exec-and-forget open -a /Applications/Zed.app'
 alt-shift-comma = 'exec-and-forget open -a /System/Applications/System\ Settings.app'
 
+alt-shift-ctrl-left = 'workspace --wrap-around prev'
+alt-shift-ctrl-right = 'workspace --wrap-around next'
+
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main']                # reset layout
+s = ['exec-and-forget sketchybar --reload', 'mode main']
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
