@@ -23,7 +23,7 @@ brew "sketchybar"
 
 cask "orbstack"
 cask "logi-options+"
-cask "wezterm"
+cask "ghostty"
 cask "zed"
 cask "zen-browser"
 cask "slack"

@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Change the default terminal to Ghostty
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add \
+  '{ LSHandlerRoleAll = "com.mitchellh.ghostty"; LSHandlerURLScheme = "file"; }'
+
 # Expand print panel by default.
 defaults write NSGlobalDomain NSNavPanelExpandedStateForPrintMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForPrintMode2 -bool true
@@ -81,7 +85,7 @@ apps=(
   "/Applications/Telegram Desktop.app"
   "/Applications/Zen Browser.app"
   "/Applications/Zed.app"
-  "/Applications/WezTerm.app"
+  "/Applications/Ghostty.app"
   "/Applications/Slack.app"
 )
 

@@ -36,7 +36,7 @@ if.app-name-regex-substring = 'zen browser'
 run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'wezterm'
+if.app-name-regex-substring = 'ghostty'
 run = 'move-node-to-workspace G'
 
 [[on-window-detected]]
@@ -117,7 +117,7 @@ alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode app'
 
 alt-shift-b = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
-alt-shift-g = 'exec-and-forget open -a /Applications/Wezterm.app'
+alt-shift-g = 'exec-and-forget open -a /Applications/Ghostty.app'
 alt-shift-s = 'exec-and-forget open -a /Applications/Slack.app'
 alt-shift-t = 'exec-and-forget open -a /Applications/Telegram\ Desktop.app'
 alt-shift-v = 'exec-and-forget open -a /Applications/OpenVPN\ Connect.app'
