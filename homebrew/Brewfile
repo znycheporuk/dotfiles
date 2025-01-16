@@ -18,7 +18,6 @@ brew "gopls"
 tap "oven-sh/bun"
 brew "bun"
 tap "FelixKratz/formulae"
-brew "borders"
 brew "sketchybar"
 
 cask "orbstack"

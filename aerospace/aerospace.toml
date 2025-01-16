@@ -1,11 +1,7 @@
 start-at-login = true
 after-login-command = []
 
-after-startup-command = [
-    'exec-and-forget sketchybar',
-    'workspace M',
-    'exec-and-forget borders active_color=0xffcba6f7 width=5.0 hidpi=on',
-]
+after-startup-command = ['exec-and-forget sketchybar', 'workspace M']
 
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
@@ -70,10 +66,10 @@ run = 'move-node-to-workspace M'
 [gaps]
 inner.horizontal = [{ monitor."built-in" = 6 }, 8]
 inner.vertical = [{ monitor."built-in" = 6 }, 8]
-outer.left = [{ monitor."built-in" = 3 }, 8]
-outer.bottom = [{ monitor."built-in" = 3 }, 8]
+outer.left = 0
+outer.bottom = 0
 outer.top = [{ monitor."built-in" = 3 }, 36]
-outer.right = [{ monitor."built-in" = 3 }, 8]
+outer.right = 0
 
 [mode.main.binding]
 

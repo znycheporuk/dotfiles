@@ -35,6 +35,12 @@
   "tab_bar": {
     "show": true
   },
+  "terminal": {
+    "line_height": "standard",
+    "toolbar": {
+      "breadcrumbs": false
+    }
+  },
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
     "Shell Script": ["*.conf", "*rc"]
@@ -51,7 +57,7 @@
   },
   "chat_panel": {
     "enabled": false,
-    "button": false
+    "button": "when_in_call"
   },
   "collaboration_panel": {
     "enabled": false,

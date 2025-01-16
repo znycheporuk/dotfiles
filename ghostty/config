@@ -1,10 +1,10 @@
 theme = dark:catppuccin-mocha,light:catppuccin-latte
 font-family = ComicShannsMono Nerd Font
 font-size = 16
-background-opacity = 0.8
+background-opacity = 0.9
 background-blur-radius = 20
 macos-titlebar-style = hidden
 macos-icon = custom-style
 macos-icon-screen-color = black
 macos-icon-ghost-color = white
-macos-icon-frame=plastic
+macos-icon-frame = plastic
