@@ -10,10 +10,10 @@ def is_dark_mode [] {
 }
 
 if (is_dark_mode) {
-  $env.STARSHIP_CONFIG = "~/.config/starship/dark.toml"
+  $env.STARSHIP_CONFIG = "/Users/nycheporuk/.config/starship/dark.toml"
   $env.BAT_THEME = "Catppuccin Mocha"
 } else {
-  $env.STARSHIP_CONFIG = "~/.config/starship/light.toml"
+  $env.STARSHIP_CONFIG = "/Users/nycheporuk/.config/starship/light.toml"
   $env.BAT_THEME = "Catppuccin Latte"
 }
 

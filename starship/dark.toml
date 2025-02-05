@@ -1,11 +1,15 @@
-add_newline = false
+add_newline = true
 palette = "catppuccin_mocha"
 
-[character]
-# Note the use of Catppuccin color 'peach'
-success_symbol = "[[󰄛](green) ❯](peach)"
-error_symbol = "[[󰄛](red) ❯](peach)"
-vimcmd_symbol = "[󰄛 ❮](subtext1)"
+command_timeout = 1000
+
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[bun]
+symbol = " "
+style = "bold rosewater"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"

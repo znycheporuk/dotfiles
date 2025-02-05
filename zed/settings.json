@@ -43,7 +43,8 @@
   },
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "Shell Script": ["*.conf", "*rc"]
+    "Shell Script": ["*.conf", "*rc"],
+    "JSONC": ["bun.lock"]
   },
   "assistant": {
     "dock": "right",
