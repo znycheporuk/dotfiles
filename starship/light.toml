@@ -4,6 +4,7 @@ palette = "catppuccin_latte"
 [nodejs]
 symbol = " "
 style = "bold green"
+disabled = true
 
 [bun]
 symbol = "🍞 "
