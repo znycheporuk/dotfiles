@@ -7,5 +7,17 @@ sh ~/dotfiles/macos/defaults.sh
 initial_dir=$(pwd)
 cd ~/dotfiles
 stow .
-ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 cd "$initial_dir"
+
+# Handle .zshrc linking with backup
+if [[ -L ~/.zshrc ]]; then
+    echo "✅ ~/.zshrc is already a symlink"
+elif [[ -f ~/.zshrc ]]; then
+    echo "📁 Backing up existing ~/.zshrc to ~/.zshrc.bak"
+    mv ~/.zshrc ~/.zshrc.bak
+    ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
+    echo "🔗 Created symlink ~/.zshrc -> ~/dotfiles/zsh/.zshrc"
+else
+    ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
+    echo "🔗 Created symlink ~/.zshrc -> ~/dotfiles/zsh/.zshrc"
+fi

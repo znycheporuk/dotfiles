@@ -10,6 +10,8 @@ setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded 
 setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry
 setopt SHARE_HISTORY             # Share history between all sessions
+setopt HIST_LEX_WORDS            # Use zsh's extended word parsing for history
+setopt HIST_FIND_NO_DUPS         # Don't show duplicates when searching
 
 # PATH setup
 export PATH="/opt/homebrew/bin:$PATH"
@@ -42,8 +44,14 @@ compinit
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
 
+# mcfly configuration
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=2
+
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
+eval "$(zoxide init zsh)"
+eval "$(mcfly init zsh)"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -53,6 +61,14 @@ alias dcd='docker compose down'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
+# eza (modern ls replacement)
+alias ls='eza --group-directories-first'
+alias ll='eza -l --group-directories-first'
+alias la='eza -la --group-directories-first'
+alias tree='eza --tree'
+alias lg='eza -l --git'
+
 
 
 
@@ -87,13 +103,14 @@ btop() {
     local btop_config="$HOME/.config/btop/btop.conf"
 
     if [[ -f "$btop_config" ]]; then
-        local temp_file=$(mktemp)
+        # Follow symlink to get the actual file path
+        local real_config=$(readlink -f "$btop_config")
+
         if is_dark_mode; then
-            sed 's|catppuccin_latte\.theme"|catppuccin_mocha.theme"|g' "$btop_config" > "$temp_file"
+            sed -i '' 's|catppuccin_latte\.theme"|catppuccin_mocha.theme"|g' "$real_config"
         else
-            sed 's|catppuccin_mocha\.theme"|catppuccin_latte.theme"|g' "$btop_config" > "$temp_file"
+            sed -i '' 's|catppuccin_mocha\.theme"|catppuccin_latte.theme"|g' "$real_config"
         fi
-        mv "$temp_file" "$btop_config"
     fi
 
     command btop "$@"
