@@ -5,3 +5,4 @@
 --ignore=homebrew
 --ignore=macos
 --ignore=setup.sh
+--ignore=zsh

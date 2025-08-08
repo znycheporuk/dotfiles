@@ -6,7 +6,7 @@ command_timeout = 1000
 [nodejs]
 symbol = " "
 style = "bold green"
-disabled = true
+disabled = false
 
 [bun]
 symbol = " "

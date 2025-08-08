@@ -1,17 +1,42 @@
 {
-  "inline_completions": {
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
+    },
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "o4-mini"
+    },
+    "default_profile": "write"
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "edit_predictions": {
     "disabled_globs": [".env"]
   },
-  "language_servers": [
-    "!typescript-language-server",
-    "!eslint",
-    "!prettier",
-    "vtsls",
-    "biome",
-    "..."
-  ],
+  "collaboration_panel": {
+    "button": false
+  },
+  "debugger": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "diagnostics": {
+    "include_warnings": false,
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 500,
+      "padding": 4,
+      "min_column": 0,
+      "max_severity": null
+    }
+  },
   "vim_mode": true,
-  "relative_line_numbers": true,
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
@@ -44,25 +69,12 @@
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
     "Shell Script": ["*.conf", "*rc"],
-    "JSONC": ["bun.lock"]
+    "JSONC": ["bun.lock", "tsconfig.*.json"],
+    "HTML": ["*.ejs"]
   },
-  "assistant": {
-    "dock": "right",
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4o"
-    },
-    "version": "2",
-    "button": false,
-    "enabled": true
-  },
-  "chat_panel": {
-    "enabled": false,
-    "button": "when_in_call"
-  },
-  "collaboration_panel": {
-    "enabled": false,
-    "button": false
-  },
-  "when_closing_with_no_tabs": "keep_window_open"
+  "when_closing_with_no_tabs": "keep_window_open",
+  "max_tabs": 10,
+  "minimap": {
+    "show": "auto"
+  }
 }

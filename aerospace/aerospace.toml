@@ -10,7 +10,7 @@ exec-on-workspace-change = [
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 on-focus-changed = []
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focused-monitor-changed = []
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
@@ -24,7 +24,7 @@ S = 'main'
 M = 'secondary'
 B = 'secondary'
 G = 'secondary'
-T = 'secondary'
+T = 'main'
 Z = 'secondary'
 
 [[on-window-detected]]
@@ -33,6 +33,10 @@ run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'ghostty'
+run = 'move-node-to-workspace G'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'gimp'
 run = 'move-node-to-workspace G'
 
 [[on-window-detected]]
@@ -61,6 +65,10 @@ run = 'move-node-to-workspace M'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'zoom'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'obsidian'
 run = 'move-node-to-workspace M'
 
 [gaps]
@@ -99,7 +107,7 @@ alt-s = 'workspace S'
 alt-t = 'workspace T'
 alt-z = 'workspace Z'
 
-alt-ctrl-m = 'move-node-to-workspace --focus-follows-window M' # main Ω∫Ωworkspace
+alt-ctrl-m = 'move-node-to-workspace --focus-follows-window M' # main workspace
 alt-ctrl-g = 'move-node-to-workspace --focus-follows-window G'
 alt-ctrl-b = 'move-node-to-workspace --focus-follows-window B'
 alt-ctrl-s = 'move-node-to-workspace --focus-follows-window S'
@@ -112,7 +120,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode app'
 
-alt-shift-b = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
+alt-shift-b = 'exec-and-forget open -a /Applications/Zen.app'
 alt-shift-g = 'exec-and-forget open -a /Applications/Ghostty.app'
 alt-shift-s = 'exec-and-forget open -a /Applications/Slack.app'
 alt-shift-t = 'exec-and-forget open -a /Applications/Telegram\ Desktop.app'
