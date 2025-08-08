@@ -1,5 +1,7 @@
 -- Single file Neovim configuration with Catppuccin colorscheme and Lualine statusline
 
+---@diagnostic disable: undefined-global
+
 -- Set leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
