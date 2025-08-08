@@ -35,11 +35,17 @@ else
     export BAT_THEME="Catppuccin Latte"
 fi
 
+# Carapace setup
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+autoload -U compinit
+compinit
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
+
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 
 # Aliases
 alias dcu='docker compose up'
@@ -75,3 +81,20 @@ chpwd() {
 
 # Run once on shell startup
 add_node_modules_to_path
+
+# Btop wrapper function that updates theme before launching
+btop() {
+    local btop_config="$HOME/.config/btop/btop.conf"
+
+    if [[ -f "$btop_config" ]]; then
+        local temp_file=$(mktemp)
+        if is_dark_mode; then
+            sed 's|catppuccin_latte\.theme"|catppuccin_mocha.theme"|g' "$btop_config" > "$temp_file"
+        else
+            sed 's|catppuccin_mocha\.theme"|catppuccin_latte.theme"|g' "$btop_config" > "$temp_file"
+        fi
+        mv "$temp_file" "$btop_config"
+    fi
+
+    command btop "$@"
+}
