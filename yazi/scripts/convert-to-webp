@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+# Script to convert selected files to WebP format using ffmpeg
+# Usage: convert-to-webp file1 [file2 ...]
+
+set -euo pipefail
+
+
+
+# Check if ffmpeg is available
+if ! command -v ffmpeg &> /dev/null; then
+    exit 1
+fi
+
+# Check if any files were provided
+if [ $# -eq 0 ]; then
+    exit 1
+fi
+
+# Supported input formats
+SUPPORTED_FORMATS=(jpg jpeg png gif bmp tiff webp mp4 mov avi mkv)
+
+# Function to check if file extension is supported
+is_supported_format() {
+    local file="$1"
+    local ext="${file##*.}"
+    ext="$(echo "$ext" | tr '[:upper:]' '[:lower:]')" # Convert to lowercase
+
+    for format in "${SUPPORTED_FORMATS[@]}"; do
+        if [[ "$ext" == "$format" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Function to convert a single file
+convert_file() {
+    local input_file="$1"
+    local dir="$(dirname "$input_file")"
+    local filename="$(basename "$input_file")"
+    local name_only="${filename%.*}"
+    local output_file="$dir/$name_only.webp"
+
+    # Skip if input file doesn't exist
+    if [[ ! -f "$input_file" ]]; then
+        return 1
+    fi
+
+    # Check if format is supported
+    if ! is_supported_format "$input_file"; then
+        return 1
+    fi
+
+    # Skip if output file already exists
+    if [[ -f "$output_file" ]]; then
+        return 1
+    fi
+
+    # Convert to WebP with good quality settings
+    if ffmpeg -i "$input_file" -c:v libwebp -quality 85 -compression_level 6 -y "$output_file" 2>/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Main conversion loop
+success_count=0
+total_count=0
+
+for file in "$@"; do
+    ((total_count++))
+    if convert_file "$file"; then
+        ((success_count++))
+    fi
+done
+
+# Exit with error code if no files were converted
+if [[ $success_count -eq 0 ]]; then
+    exit 1
+fi

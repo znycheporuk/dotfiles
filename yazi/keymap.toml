@@ -1,0 +1,9 @@
+[mgr]
+
+prepend_keymap = [
+    { on = [
+        "c",
+        "w",
+    ], run = "shell 'bash ~/.config/yazi/scripts/convert-to-webp \"$@\"'", desc = "Convert selected file(s) to WebP" },
+
+]

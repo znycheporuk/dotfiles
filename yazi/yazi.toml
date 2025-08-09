@@ -1,0 +1,19 @@
+[mgr]
+# Show hidden files by default
+show_hidden = false
+
+# Sort directories first
+sort_dir_first = true
+
+[opener]
+# Add custom openers here if needed
+
+[plugin]
+# Plugin configuration
+
+# Add scripts directory to PATH for shell commands
+prepend_previewers = []
+prepend_preloaders = []
+
+[log]
+enabled = false
