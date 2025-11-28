@@ -1,13 +1,14 @@
 {
+  "agent_buffer_font_size": 16.0,
   "agent": {
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
+      "model": "claude-sonnet-4.5"
     },
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "o4-mini"
+      "model": "gpt-5-mini"
     },
     "default_profile": "write"
   },
@@ -36,7 +37,7 @@
       "max_severity": null
     }
   },
-  "vim_mode": true,
+  "vim_mode": false,
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
@@ -50,10 +51,6 @@
   "buffer_font_weight": 400,
   "soft_wrap": "editor_width",
   "file_scan_exclusions": ["**/.DS_Store", "**/.git", ".idea"],
-  "copilot": {
-    "disabled_globs": [".env"],
-    "button": false
-  },
   "tabs": {
     "git_status": true
   },
@@ -70,11 +67,11 @@
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
     "Shell Script": ["*.conf", "*rc"],
     "JSONC": ["bun.lock", "tsconfig.*.json"],
-    "HTML": ["*.ejs"]
+    "HTML": ["*.ejs", "*.svg"]
   },
   "when_closing_with_no_tabs": "keep_window_open",
   "max_tabs": 10,
   "minimap": {
-    "show": "auto"
+    "show": "never"
   }
 }
