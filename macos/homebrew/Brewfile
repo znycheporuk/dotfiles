@@ -1,9 +1,10 @@
 # Shell and terminal tools
-brew "nushell"
 brew "starship"
 brew "carapace"
 brew "mcfly"
 brew "tmux"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
 
 # CLI utilities and replacements
 brew "btop"
@@ -37,7 +38,7 @@ cask "obsidian"
 cask "logi-options+"
 cask "ghostty"
 cask "zed"
-cask "zen"
+cask "helium-browser"
 cask "slack"
 cask "telegram-desktop"
 cask "font-comic-shanns-mono-nerd-font"

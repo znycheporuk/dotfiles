@@ -1,8 +1,0 @@
---dir=~/dotfiles
---target=~/.config
---ignore=.stowrc
---ignore=DS_Store
---ignore=homebrew
---ignore=macos
---ignore=setup.sh
---ignore=zsh

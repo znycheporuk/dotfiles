@@ -83,7 +83,7 @@ defaults write com.apple.dock wvous-bl-corner -int 0
 
 apps=(
   "/Applications/Telegram Desktop.app"
-  "/Applications/Zen.app"
+  "/Applications/Helium.app"
   "/Applications/Zed.app"
   "/Applications/Ghostty.app"
   "/Applications/Slack.app"

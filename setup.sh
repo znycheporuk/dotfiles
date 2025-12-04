@@ -1,23 +1,19 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+#!/usr/bin/env bash
+set -euo pipefail
 
-sh ~/dotfiles/homebrew/install.sh
-sh ~/dotfiles/macos/defaults.sh
-# sh ~/dotfiles/macos/setup_shell.sh
+REPO_DIR="${HOME}/dotfiles"
 
-initial_dir=$(pwd)
-cd ~/dotfiles
-stow .
-cd "$initial_dir"
-
-# Handle .zshrc linking with backup
-if [[ -L ~/.zshrc ]]; then
-    echo "✅ ~/.zshrc is already a symlink"
-elif [[ -f ~/.zshrc ]]; then
-    echo "📁 Backing up existing ~/.zshrc to ~/.zshrc.bak"
-    mv ~/.zshrc ~/.zshrc.bak
-    ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
-    echo "🔗 Created symlink ~/.zshrc -> ~/dotfiles/zsh/.zshrc"
-else
-    ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
-    echo "🔗 Created symlink ~/.zshrc -> ~/dotfiles/zsh/.zshrc"
-fi
+case "$(uname -s)" in
+  Darwin)
+    [[ -f "${REPO_DIR}/macos/setup.sh" ]] || { echo "❌ macos/setup.sh not found"; exit 1; }
+    sh "${REPO_DIR}/macos/setup.sh"
+    ;;
+  Linux)
+    echo "Linux support not implemented yet"
+    exit 0
+    ;;
+  *)
+    echo "Unsupported OS: $(uname -s)"
+    exit 1
+    ;;
+esac

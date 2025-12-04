@@ -28,15 +28,11 @@ T = 'main'
 Z = 'secondary'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zen'
+if.app-name-regex-substring = 'helium'
 run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'ghostty'
-run = 'move-node-to-workspace G'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'gimp'
 run = 'move-node-to-workspace G'
 
 [[on-window-detected]]
@@ -120,7 +116,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode app'
 
-alt-shift-b = 'exec-and-forget open -a /Applications/Zen.app'
+alt-shift-b = 'exec-and-forget open -a /Applications/Helium.app'
 alt-shift-g = 'exec-and-forget open -a /Applications/Ghostty.app'
 alt-shift-s = 'exec-and-forget open -a /Applications/Slack.app'
 alt-shift-t = 'exec-and-forget open -a /Applications/Telegram\ Desktop.app'
