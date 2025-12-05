@@ -1,0 +1,58 @@
+# Core utilities
+base-devel
+git
+curl
+wget
+unzip
+zip
+rsync
+
+# Shell
+zsh
+zsh-completions
+zsh-syntax-highlighting
+zsh-autosuggestions
+
+# Terminal utilities
+neovim
+btop
+yazi
+ffmpeg
+fzf
+eza
+bat
+starship
+jq
+
+# Fonts
+otf-comicshanns-nerd
+
+# Wayland compositors and tools
+niri
+swaylock
+wl-clipboard
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+xdg-desktop-portal-gnome
+grim
+slurp
+brightnessctl
+playerctl
+wireplumber
+pipewire
+pipewire-pulse
+pipewire-alsa
+pipewire-jack
+
+# System utilities
+polkit-kde-agent
+network-manager-applet
+bluez
+bluez-utils
+blueman
+pavucontrol
+
+# Applications
+discord
+steam
+telegram-desktop

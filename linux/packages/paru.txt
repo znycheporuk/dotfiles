@@ -1,0 +1,7 @@
+# AUR packages
+zed
+ghostty
+helium-browser
+quickshell-git
+vicinae-git
+noctalia-git

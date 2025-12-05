@@ -9,8 +9,8 @@ case "$(uname -s)" in
     sh "${REPO_DIR}/macos/setup.sh"
     ;;
   Linux)
-    echo "Linux support not implemented yet"
-    exit 0
+    [[ -f "${REPO_DIR}/linux/setup.sh" ]] || { echo "❌ linux/setup.sh not found"; exit 1; }
+    sh "${REPO_DIR}/linux/setup.sh"
     ;;
   *)
     echo "Unsupported OS: $(uname -s)"
