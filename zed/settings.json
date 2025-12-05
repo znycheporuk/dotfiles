@@ -1,1 +1,77 @@
-/Users/nycheporuk/dotfiles/zed/settings.json
+{
+  "agent_buffer_font_size": 16.0,
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4.5"
+    },
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini"
+    },
+    "default_profile": "write"
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "edit_predictions": {
+    "disabled_globs": [".env"]
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "debugger": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "diagnostics": {
+    "include_warnings": false,
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 500,
+      "padding": 4,
+      "min_column": 0,
+      "max_severity": null
+    }
+  },
+  "vim_mode": false,
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha"
+  },
+  "scroll_beyond_last_line": "vertical_scroll_margin",
+  "buffer_font_family": "ComicShannsMono Nerd Font",
+  "ui_font_family": "ComicShannsMono Nerd Font",
+  "ui_font_size": 18,
+  "buffer_font_size": 18,
+  "buffer_font_weight": 400,
+  "soft_wrap": "editor_width",
+  "file_scan_exclusions": ["**/.DS_Store", "**/.git", ".idea"],
+  "tabs": {
+    "git_status": true
+  },
+  "tab_bar": {
+    "show": true
+  },
+  "terminal": {
+    "line_height": "standard",
+    "toolbar": {
+      "breadcrumbs": false
+    }
+  },
+  "file_types": {
+    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
+    "Shell Script": ["*.conf", "*rc"],
+    "JSONC": ["bun.lock", "tsconfig.*.json"],
+    "HTML": ["*.ejs", "*.svg"]
+  },
+  "when_closing_with_no_tabs": "keep_window_open",
+  "max_tabs": 10,
+  "minimap": {
+    "show": "never"
+  }
+}
