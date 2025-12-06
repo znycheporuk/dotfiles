@@ -1,55 +1,68 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_DIR="${REPO_DIR:-${HOME}/dotfiles}"
-TARGET_DIR="${TARGET_DIR:-${HOME}/.config}"
+REPO_DIR="${HOME}/dotfiles"
+MACOS_DIR="${REPO_DIR}/macos"
+TARGET_DIR="${HOME}/.config"
 
-IGNORE=("macos" "linux" ".git" ".gitignore" "setup.sh" "README.md" "zed")
-
-is_ignored() {
-  local name="$1"
-  for ig in "${IGNORE[@]}"; do
-    [[ "$ig" == "$name" ]] && return 0
-  done
-  return 1
-}
-
-link_file() {
+link_item() {
   local src="$1"
   local dest="$2"
 
   if [[ -L "$dest" ]]; then
     local current="$(readlink "$dest" || true)"
     if [[ "$current" == "$src" ]]; then
-      echo "✅ $dest"
+      echo "  ✅ $(basename "$dest")"
       return 0
     fi
     rm "$dest"
   elif [[ -e "$dest" ]]; then
     mv "$dest" "${dest}.backup.$(date +%Y%m%d%H%M%S)"
+    echo "  ⚠️  Backed up $(basename "$dest")"
   fi
 
+  mkdir -p "$(dirname "$dest")"
   ln -s "$src" "$dest"
-  echo "🔗 $dest -> $src"
+  echo "  🔗 $(basename "$dest")"
 }
 
-mkdir -p "$TARGET_DIR"
+echo "🔗 Linking macOS configs to ~/.config"
 
-# Link top-level directories
-for entry in "$REPO_DIR"/*; do
-  [[ -d "$entry" ]] || continue
+# Link files from macos/* subdirectories to ~/.config/*
+for dir in "$MACOS_DIR"/*; do
+  [[ -d "$dir" ]] || continue
 
-  name="$(basename "$entry")"
-  [[ "$name" == .* ]] && continue
-  is_ignored "$name" && continue
+  config_name="$(basename "$dir")"
 
-  link_file "$entry" "$TARGET_DIR/$name"
+  # Skip non-config directories
+  case "$config_name" in
+    homebrew|zsh) continue ;;
+  esac
+
+  echo "📁 $config_name"
+
+  # Link each file in the directory
+  while IFS= read -r -d '' file; do
+    rel_path="${file#$dir/}"
+    dest_file="$TARGET_DIR/$config_name/$rel_path"
+    link_item "$file" "$dest_file"
+  done < <(find "$dir" -type f -print0)
 done
 
-# Special case: link only settings.json from zed
-if [[ -f "$REPO_DIR/zed/settings.json" ]]; then
-  mkdir -p "$TARGET_DIR/zed"
-  link_file "$REPO_DIR/zed/settings.json" "$TARGET_DIR/zed/settings.json"
-fi
+# Link shared top-level configs
+echo "📁 Shared configs"
+for dir in "$REPO_DIR"/{nvim,ghostty,btop,yazi,zed}; do
+  [[ -d "$dir" ]] || continue
 
+  config_name="$(basename "$dir")"
+
+  # Link each file in the directory
+  while IFS= read -r -d '' file; do
+    rel_path="${file#$dir/}"
+    dest_file="$TARGET_DIR/$config_name/$rel_path"
+    link_item "$file" "$dest_file"
+  done < <(find "$dir" -type f -print0)
+done
+
+echo ""
 echo "✅ Linking complete"

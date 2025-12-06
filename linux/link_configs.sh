@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_DIR="${REPO_DIR:-${HOME}/dotfiles}"
-TARGET_DIR="${TARGET_DIR:-${HOME}/.config}"
-
-# Shared configs (top-level) + Linux-specific configs
-IGNORE=("macos" "linux" ".git" ".gitignore" "setup.sh" "README.md" "zed")
-
-is_ignored() {
-  local name="$1"
-  for ig in "${IGNORE[@]}"; do
-    [[ "$ig" == "$name" ]] && return 0
-  done
-  return 1
-}
+REPO_DIR="${HOME}/dotfiles"
+LINUX_DIR="${REPO_DIR}/linux"
+TARGET_DIR="${HOME}/.config"
 
 link_file() {
   local src="$1"
@@ -22,46 +12,57 @@ link_file() {
   if [[ -L "$dest" ]]; then
     local current="$(readlink "$dest" || true)"
     if [[ "$current" == "$src" ]]; then
-      echo "✅ $dest"
+      echo "  ✅ $(basename "$dest")"
       return 0
     fi
     rm "$dest"
   elif [[ -e "$dest" ]]; then
     mv "$dest" "${dest}.backup.$(date +%Y%m%d%H%M%S)"
+    echo "  ⚠️  Backed up $(basename "$dest")"
   fi
 
+  mkdir -p "$(dirname "$dest")"
   ln -s "$src" "$dest"
-  echo "🔗 $dest -> $src"
+  echo "  🔗 $(basename "$dest")"
 }
 
-mkdir -p "$TARGET_DIR"
+echo "🔗 Linking Linux configs to ~/.config"
 
-# Link shared top-level directories
-for entry in "$REPO_DIR"/*; do
-  [[ -d "$entry" ]] || continue
+# Link files from linux/* subdirectories to ~/.config/*
+for dir in "$LINUX_DIR"/*; do
+  [[ -d "$dir" ]] || continue
 
-  name="$(basename "$entry")"
-  [[ "$name" == .* ]] && continue
-  is_ignored "$name" && continue
+  config_name="$(basename "$dir")"
 
-  link_file "$entry" "$TARGET_DIR/$name"
+  # Skip non-config directories
+  case "$config_name" in
+    packages|zsh) continue ;;
+  esac
+
+  echo "📁 $config_name"
+
+  # Link each file in the directory
+  while IFS= read -r -d '' file; do
+    rel_path="${file#$dir/}"
+    dest_file="$TARGET_DIR/$config_name/$rel_path"
+    link_file "$file" "$dest_file"
+  done < <(find "$dir" -type f -print0)
 done
 
-# Link Linux-specific configs from linux/
-for entry in "$REPO_DIR/linux"/*; do
-  [[ -d "$entry" ]] || continue
-  
-  name="$(basename "$entry")"
-  # Skip zsh directory (handled separately)
-  [[ "$name" == "zsh" ]] && continue
-  
-  link_file "$entry" "$TARGET_DIR/$name"
+# Link shared top-level configs
+echo "📁 Shared configs"
+for dir in "$REPO_DIR"/{nvim,ghostty,btop,yazi,zed}; do
+  [[ -d "$dir" ]] || continue
+
+  config_name="$(basename "$dir")"
+
+  # Link each file individually
+  while IFS= read -r -d '' file; do
+    rel_path="${file#$dir/}"
+    dest_file="$TARGET_DIR/$config_name/$rel_path"
+    link_file "$file" "$dest_file"
+  done < <(find "$dir" -type f -not -name '.gitignore' -print0)
 done
 
-# Special case: link only settings.json from zed
-if [[ -f "$REPO_DIR/zed/settings.json" ]]; then
-  mkdir -p "$TARGET_DIR/zed"
-  link_file "$REPO_DIR/zed/settings.json" "$TARGET_DIR/zed/settings.json"
-fi
-
+echo ""
 echo "✅ Linking complete"

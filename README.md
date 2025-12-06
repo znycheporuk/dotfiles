@@ -1,130 +1,155 @@
 # Dotfiles
 
-Cross-platform configuration files for macOS and Linux development environments.
-
-## Quick Start
-
-```bash
-git clone https://github.com/znycheporuk/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-sh setup.sh
-```
-
-The setup script automatically detects your OS and:
-- **macOS**: Installs Homebrew packages, applies system preferences, links configs
-- **Linux**: Optionally installs packages via pacman/paru, links configs
+Cross-platform dotfiles for macOS and Linux (Linux support coming soon).
 
 ## Structure
 
 ```
-dotfiles/
-├── setup.sh           # OS detection & dispatcher
-├── macos/             # macOS-specific
-│   ├── setup.sh       # Package install, system prefs, config linking
-│   ├── homebrew/      # Brewfile for packages
-│   ├── aerospace/     # Window manager
-│   ├── karabiner/     # Keyboard remapping
-│   └── ...
-├── linux/             # Linux-specific
-│   ├── setup.sh       # Package install, config linking
-│   ├── packages/      # pacman.txt + paru.txt (like Brewfile)
-│   ├── niri/          # Wayland compositor
-│   ├── noctalia/      # Shell/bar config
-│   └── ...
-├── nvim/              # Shared editor config
-├── yazi/              # Shared file manager
-├── btop/              # Shared system monitor
-└── zed/               # Shared editor settings
+~/dotfiles/
+├── setup.sh              # Main installer (detects OS and runs platform script)
+├── macos/                # macOS-specific configs
+│   ├── setup.sh          # macOS installer
+│   ├── link_configs.sh   # Symlink helper (links files, not directories)
+│   ├── defaults.sh       # System defaults (Finder, Dock, etc.)
+│   ├── homebrew/         # Brewfile and installer
+│   ├── zsh/              # macOS zsh config
+│   ├── aerospace/        # Window manager
+│   ├── karabiner/        # Keyboard remapping
+│   ├── sketchybar/       # Menu bar
+│   ├── starship/         # Prompt themes
+│   └── bat/              # Syntax highlighting
+├── linux/                # Linux-specific configs (not implemented yet)
+│   └── zsh/              # Linux zsh config
+├── nvim/                 # Neovim config (shared)
+├── ghostty/              # Terminal config (shared)
+├── btop/                 # System monitor (shared)
+├── yazi/                 # File manager (shared)
+└── zed/                  # Editor config (shared, only settings.json tracked)
 ```
 
-## Platform-Specific Features
+## Installation
 
 ### macOS
-- **Window Manager**: AeroSpace (tiling, named workspaces)
-- **Package Manager**: Homebrew (`macos/homebrew/Brewfile`)
-- **System Preferences**: Automated via `macos/defaults.sh`
-- **Tools**: Karabiner, SketchyBar, Starship
 
-### Linux (Arch/CachyOS)
-- **Window Manager**: Niri (scrollable-tiling compositor)
-- **Package Manager**: pacman + paru (`linux/packages/*.txt`)
-- **Shell/Bar**: Quickshell + Noctalia
-- **Tools**: Vicinae, all necessary XDG portals
+Clone to `~/dotfiles` and run:
 
-## Window Manager Keybindings
-
-Both systems use consistent vim-style navigation:
-
-| Action | macOS (AeroSpace) | Linux (Niri) |
-|--------|-------------------|--------------|
-| Focus window | `Alt+H/J/K/L` | `Mod+H/J/K/L` |
-| Move window | `Alt+Ctrl+H/J/K/L` | `Mod+Ctrl+H/J/K/L` |
-| Switch workspace | `Alt+[Letter]` | `Mod+[Letter]` |
-| Launch apps | `Alt+Shift+[Key]` | `Super+Shift+[Key]` |
-
-**Named Workspaces**: M (Main), B (Browser), G (Ghostty), S (Steam/Slack), T (Telegram), Z (Zed)
-
-## Package Management
-
-### macOS
 ```bash
-# Edit packages
-nvim ~/dotfiles/macos/homebrew/Brewfile
+git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+sh setup.sh
+```
 
-# Install/update
+This will:
+1. Install Homebrew packages from `macos/homebrew/Brewfile`
+2. Apply macOS system defaults
+3. Symlink config files to `~/.config/`
+4. Link `~/.zshrc` to `macos/zsh/.zshrc`
+
+### Linux
+
+Not implemented yet.
+
+## How It Works
+
+### Platform Detection
+
+`setup.sh` detects your OS and delegates to the appropriate platform script:
+- macOS → `macos/setup.sh`
+- Linux → `linux/setup.sh` (placeholder)
+
+### Config Linking
+
+`macos/link_configs.sh` creates symlinks for **individual files** (not directories):
+
+**From `macos/*/`:**
+- `macos/aerospace/aerospace.toml` → `~/.config/aerospace/aerospace.toml`
+- `macos/starship/dark.toml` → `~/.config/starship/dark.toml`
+- `macos/bat/config` → `~/.config/bat/config`
+- etc.
+
+**From top-level shared configs:**
+- `nvim/init.lua` → `~/.config/nvim/init.lua`
+- `ghostty/config` → `~/.config/ghostty/config`
+- `zed/settings.json` → `~/.config/zed/settings.json`
+- etc.
+
+**Behavior:**
+- Backs up existing files with `.backup.TIMESTAMP` suffix
+- Skips `.gitignore` files
+- Preserves directory structure
+- Idempotent - safe to run multiple times
+
+### Platform-Specific vs Shared
+
+**Platform-specific** (under `macos/` or `linux/`):
+- Shell configs (zsh)
+- OS-specific tools (karabiner, aerospace, homebrew)
+- System preferences
+- Window managers, menu bars
+
+**Shared** (top-level):
+- Editor configs (nvim, zed)
+- Terminal (ghostty)
+- CLI tools (btop, yazi)
+
+## Modifying
+
+### Add a New Shared Config
+
+1. Create directory: `mkdir ~/dotfiles/myapp`
+2. Add config files inside
+3. Run `sh ~/dotfiles/macos/link_configs.sh`
+4. Files will be symlinked to `~/.config/myapp/`
+
+### Add a macOS-Only Config
+
+1. Create directory: `mkdir ~/dotfiles/macos/myapp`
+2. Add config files inside
+3. Run `sh ~/dotfiles/macos/link_configs.sh`
+4. Files will be symlinked to `~/.config/myapp/`
+
+### Modify Homebrew Packages
+
+Edit `macos/homebrew/Brewfile`, then run:
+```bash
 brew bundle --file=~/dotfiles/macos/homebrew/Brewfile
 ```
 
-### Linux
-```bash
-# Edit packages
-nvim ~/dotfiles/linux/packages/pacman.txt  # Official repos
-nvim ~/dotfiles/linux/packages/paru.txt    # AUR
+### Modify macOS Preferences
 
-# Install/update
-sh ~/dotfiles/linux/packages/install.sh
+Edit `macos/defaults.sh`, then run:
+```bash
+sh ~/dotfiles/macos/defaults.sh
 ```
 
-## Adding New Configs
+### Prevent Files from Being Tracked
 
-**Shared config** (works on both platforms):
-```bash
-mkdir ~/dotfiles/myapp
-# Add config files
-sh ~/dotfiles/setup.sh  # Re-run setup to link
+Add a `.gitignore` in the config directory. For example, `zed/.gitignore` prevents Zed's auto-generated files from being tracked:
+
+```gitignore
+*
+!settings.json
+!.gitignore
 ```
 
-**Platform-specific**:
-```bash
-mkdir ~/dotfiles/macos/myapp   # or linux/myapp
-# Add config files
-sh ~/dotfiles/macos/setup.sh   # or linux/setup.sh
-```
+This keeps only `settings.json` in version control while allowing Zed to create other files in `~/.config/zed/`.
 
-## Config Linking
+## Files Reference
 
-Configs are symlinked to `~/.config/`:
-- **Shared**: `nvim`, `yazi`, `btop`, `zed` (settings.json only)
-- **macOS**: `aerospace`, `karabiner`, `sketchybar`, `ghostty`, `starship`, `bat`
-- **Linux**: `niri`, `ghostty`, `noctalia`, `vicinae`
-
-Existing files are backed up with `.backup.TIMESTAMP` suffix.
-
-## Key Apps & Tools
-
-| Category | macOS | Linux | Shared |
-|----------|-------|-------|--------|
-| Editor | - | - | Neovim, Zed |
-| Terminal | - | - | Ghostty |
-| File Manager | - | - | Yazi |
-| System Monitor | - | - | btop |
-| Window Manager | AeroSpace | Niri | - |
-| Shell | zsh | zsh | - |
-| Bar/Status | SketchyBar | Noctalia | - |
+| File | Purpose |
+|------|---------|
+| `setup.sh` | OS detection and dispatcher |
+| `macos/setup.sh` | Orchestrates macOS setup steps |
+| `macos/link_configs.sh` | Creates symlinks to ~/.config (file-level) |
+| `macos/defaults.sh` | System preferences (Dock, Finder, etc) |
+| `macos/homebrew/Brewfile` | Package list for Homebrew |
+| `macos/homebrew/install.sh` | Homebrew bootstrap and bundle installer |
+| `macos/zsh/.zshrc` | Shell configuration for macOS |
 
 ## Notes
 
-- All scripts are idempotent (safe to run multiple times)
-- Configs auto-reload where supported (e.g., Niri live-reloads on save)
-- Use `niri validate` to check Niri config syntax
-- macOS system preferences require logout/restart to fully apply
+- Existing files are backed up before symlinking (`.backup.TIMESTAMP`)
+- Scripts are idempotent - safe to run multiple times
+- No external dependencies except Homebrew (installed automatically on macOS)
+- File-level linking (not directory-level) - allows apps to create their own files in `~/.config/`
+- Only explicitly tracked files in the repo are symlinked
