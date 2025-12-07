@@ -30,27 +30,27 @@ fi
 
 # Link configs to ~/.config
 if [[ -f "$LINK_SCRIPT" ]]; then
-  sh "$LINK_SCRIPT"
+  bash "$LINK_SCRIPT"
 else
-  echo "⚠️  $LINK_SCRIPT not found"
+  echo "⚠️  link_configs.sh not found"
 fi
 
 # Link .zshrc
 if [[ -f "$MAC_ZSHRC" ]]; then
   if [[ -L "$HOME/.zshrc" ]]; then
     current="$(readlink "$HOME/.zshrc" || true)"
-    [[ "$current" == "$MAC_ZSHRC" ]] && { echo "✅ ~/.zshrc already linked"; } || {
+    [[ "$current" == "$MAC_ZSHRC" ]] && echo "✅ .zshrc already linked" || {
       rm "$HOME/.zshrc"
       ln -s "$MAC_ZSHRC" "$HOME/.zshrc"
-      echo "🔗 Updated ~/.zshrc"
+      echo "🔗 Updated .zshrc"
     }
   elif [[ -f "$HOME/.zshrc" ]]; then
     mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
     ln -s "$MAC_ZSHRC" "$HOME/.zshrc"
-    echo "🔗 Linked ~/.zshrc (backed up old one)"
+    echo "🔗 Linked .zshrc (backed up existing)"
   else
     ln -s "$MAC_ZSHRC" "$HOME/.zshrc"
-    echo "🔗 Linked ~/.zshrc"
+    echo "🔗 Linked .zshrc"
   fi
 fi
 

@@ -8,6 +8,7 @@ TARGET_DIR="${HOME}/.config"
 link_item() {
   local src="$1"
   local dest="$2"
+  local item_type="${3:-file}"
 
   if [[ -L "$dest" ]]; then
     local current="$(readlink "$dest" || true)"
@@ -21,7 +22,10 @@ link_item() {
     echo "  ⚠️  Backed up $(basename "$dest")"
   fi
 
-  mkdir -p "$(dirname "$dest")"
+  if [[ "$item_type" == "file" ]]; then
+    mkdir -p "$(dirname "$dest")"
+  fi
+
   ln -s "$src" "$dest"
   echo "  🔗 $(basename "$dest")"
 }
@@ -29,6 +33,7 @@ link_item() {
 echo "🔗 Linking macOS configs to ~/.config"
 
 # Link files from macos/* subdirectories to ~/.config/*
+# (file-level linking to preserve subdirectory structure like sketchybar/plugins/)
 for dir in "$MACOS_DIR"/*; do
   [[ -d "$dir" ]] || continue
 
@@ -41,28 +46,30 @@ for dir in "$MACOS_DIR"/*; do
 
   echo "📁 $config_name"
 
-  # Link each file in the directory
+  # Link each file recursively
   while IFS= read -r -d '' file; do
     rel_path="${file#$dir/}"
     dest_file="$TARGET_DIR/$config_name/$rel_path"
-    link_item "$file" "$dest_file"
+    link_item "$file" "$dest_file" "file"
   done < <(find "$dir" -type f -print0)
 done
 
-# Link shared top-level configs
+# Link shared top-level configs as directories
+# (directory linking so apps can manage their own subdirectories)
 echo "📁 Shared configs"
-for dir in "$REPO_DIR"/{nvim,ghostty,btop,yazi,zed}; do
+for dir in "$REPO_DIR"/{nvim,ghostty,btop,yazi}; do
   [[ -d "$dir" ]] || continue
 
   config_name="$(basename "$dir")"
-
-  # Link each file in the directory
-  while IFS= read -r -d '' file; do
-    rel_path="${file#$dir/}"
-    dest_file="$TARGET_DIR/$config_name/$rel_path"
-    link_item "$file" "$dest_file"
-  done < <(find "$dir" -type f -print0)
+  link_item "$dir" "$TARGET_DIR/$config_name" "dir"
 done
+
+# Special case: zed - only link settings.json
+if [[ -f "$REPO_DIR/zed/settings.json" ]]; then
+  echo "📁 zed"
+  mkdir -p "$TARGET_DIR/zed"
+  link_item "$REPO_DIR/zed/settings.json" "$TARGET_DIR/zed/settings.json" "file"
+fi
 
 echo ""
 echo "✅ Linking complete"

@@ -2,7 +2,6 @@
 brew "starship"
 brew "carapace"
 brew "mcfly"
-brew "tmux"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
@@ -14,7 +13,6 @@ brew "zoxide"
 brew "ripgrep"
 brew "fzf"
 brew "yazi"
-brew "stow"
 brew "wget"
 
 # Development tools
@@ -23,9 +21,6 @@ brew "lazygit"
 brew "fnm"
 tap "oven-sh/bun"
 brew "bun"
-brew "go"
-brew "gopls"
-brew "zig"
 
 # System and media tools
 brew "ffmpeg"
