@@ -1,4 +1,4 @@
-CONFIG_DIR="$HOME/.config/sketchybar"
+CONFIG_DIR="/Users/nycheporuk/.config/sketchybar"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 source "$CONFIG_DIR/colors.sh"
 FONT="ComicShannsMono Nerd Font"

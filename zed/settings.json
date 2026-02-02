@@ -1,6 +1,24 @@
 {
   "agent_buffer_font_size": 16.0,
   "agent": {
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-haiku-4.5",
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5-mini",
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.5",
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-4.5",
+      },
+    ],
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
